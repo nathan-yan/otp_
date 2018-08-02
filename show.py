@@ -38,30 +38,35 @@ def stream_otp(secret):
 
 def cli(name, secret, all):
     #if all:
-        
-
     if secret:
         stream_otp(secret)
 
     else:
-        information = keyring.get_password("otp-cli", name)
-        if not information:
-            click.echo("'%s' does not exist! Use 'otp write [name] [secret]' to create a new one-time password." % name)
-            return
+        try:
+            information, s = otp.getInformation()
+            s.close()
 
-        information = json.loads(information)
+            if name not in information:
+                click.echo("'%s' does not exist! Use 'otp write [name] [secret]' to create a new one-time password." % name)
+                return
 
-        secret = information.get('secret')
-        issuer = information.get('issuer')
-        email = information.get('email')
+            info = information.get(name)
 
-        if issuer:
-            click.echo("\n%s" % issuer, nl = False)
-        if email:
-            click.echo(" (%s)" % email, nl = True)
-            
-        if name:
-            stream_otp(secret)
-        
+            secret = keyring.get_password("otp-cli", info.get('ref'))
+            issuer = info.get('issuer')
+            email = info.get('email')
+
+            if issuer:
+                click.echo("\n%s" % issuer, nl = False)
+            if email:
+                click.echo(" (%s)" % email, nl = True)
+            else:
+                click.echo("")
+
+            if name:
+                stream_otp(secret)
+        finally:
+            s.close()
+
 if __name__ == "__main__":
     cli()

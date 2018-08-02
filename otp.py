@@ -3,6 +3,7 @@ import pyotp
 import re
 import os
 import json
+import shelve
 
 import show as show_
 import delete as delete_
@@ -10,6 +11,9 @@ import write as write_
 import update as update_
 
 valid_secret_pattern = re.compile(b"^([A-Z][2-7]+)+$")
+information_path = os.path.expanduser(os.path.join("~", "otp-cli", "information.db"))
+
+print(information_path)
 
 def validateSecret(secret):
     return valid_secret_pattern.match(secret.encode())
@@ -26,6 +30,44 @@ def showCode(secret, totp = True, counter = None, split = True):
             return code[0: int(len(code) / 2)] + " " + code[int(len(code) / 2) : ]
         else:
             return code
+
+def updateInformation(key, value):
+    try:
+        s = shelve.open(information_path)
+    except:
+        os.makedirs(information_path, exist_ok = True)
+        s = shelve.open(information_path)
+
+    try:
+        s['information'][key] = value
+    finally:
+        s.close()
+
+def removeInformation(key, value):
+    try:
+        s = shelve.open(information_path)
+    except:
+        os.makedirs(information_path, exist_ok = True)
+        s = shelve.open(information_path)
+
+    try:
+        del s['information'][key]
+    finally:
+        s.close()
+
+def getInformation():
+    try:
+        s = shelve.open(information_path, writeback = True)
+    except:
+        os.makedirs(os.path.dirname(information_path), exist_ok = True)
+        s = shelve.open(information_path, writeback = True)
+
+    try:
+        ret = s['information']
+    except:
+        ret = {}
+    
+    return ret, s
 
 @click.group()
 def cli():

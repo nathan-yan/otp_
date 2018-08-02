@@ -1,4 +1,5 @@
 import click
+import otp
 import keyring
 
 def cli(name):
@@ -6,10 +7,18 @@ def cli(name):
     delete = input("Delete your one-time password? [Y/n] ")
 
     if (delete == 'y' or delete == 'Y'):
+        information, s = otp.getInformation() 
+        
         try:
-            keyring.delete_password("otp-cli", name.lower())
-        except:
-            click.echo("'%s' does not exist! Use 'otp write [name] [secret]' to create a new one-time password." % name)
+            if name not in information:
+                click.echo("'%s' does not exist! Use 'otp write [name] [secret]' to create a new one-time password." % name)
+            else:
+                del information[name]
+
+        finally:
+            click.echo("Cleaning up...")
+            s.close()
+            
 
 if __name__ == "__main__":
     cli()
