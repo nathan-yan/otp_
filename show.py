@@ -12,13 +12,18 @@ import keyring
 import colorama
 from colorama import Fore, Back, Style
 
-colorama.init()
-
 def stream_otp(secret):
     while True:
         char = getch_.getch()
 
         if (char == 'q'):
+            click.echo('\r\r' +\
+            Fore.RED + "[ " + Fore.CYAN +\
+            "-" +\
+            Fore.RED + " ] " +\
+            Style.RESET_ALL + Fore.GREEN + "--- ---" + "    ", nl = False)      # Overwrite previous line to hide the otp
+
+            click.echo("")
             break;
 
         seconds_until_next_period = -int(time.time()) % 30
@@ -27,7 +32,7 @@ def stream_otp(secret):
         Fore.RED + "[ " + Fore.CYAN +\
         "%s" % str(seconds_until_next_period) +\
         Fore.RED + " ] " +\
-        Style.RESET_ALL + Fore.GREEN + otp.showCode(secret, split = True) + "    ", nl = False)
+        Style.RESET_ALL + Fore.GREEN + otp.showCode(secret, split = True), nl = False)
 
         sys.stdout.flush()
 
