@@ -30,7 +30,7 @@ def stream_otp(secret):
         Fore.RED + "[ " + Fore.CYAN +\
         "%s" % str(seconds_until_next_period) +\
         Fore.RED + " ] " +\
-        Style.RESET_ALL + Fore.GREEN + otp.showCode(secret, split = True), nl = False)
+        Style.RESET_ALL + Fore.GREEN + otp.showCode(secret, split = True) + "    ", nl = False)
 
         sys.stdout.flush()
 
