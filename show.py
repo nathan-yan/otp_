@@ -1,6 +1,4 @@
 import click
-import os
-import json
 import otp
 import getch_
 
