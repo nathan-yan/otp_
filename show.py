@@ -17,18 +17,18 @@ def stream_otp(secret):
         char = getch_.getch()
 
         if (char == 'q'):
-            click.echo('\r\r' +\
+            click.echo('\r' +\
             Fore.RED + "[ " + Fore.CYAN +\
             "-" +\
             Fore.RED + " ] " +\
-            Style.RESET_ALL + Fore.GREEN + "--- ---" + "    ", nl = False)      # Overwrite previous line to hide the otp
+            Style.RESET_ALL + Fore.GREEN + "--- ---" + "    " + Style.RESET_ALL, nl = False)      # Overwrite previous line to hide the otp
 
-            click.echo("")
+            click.echo(Style.RESET_ALL)
             break;
 
         seconds_until_next_period = -int(time.time()) % 30
 
-        click.echo('\r\r' +\
+        click.echo('\r' +\
         Fore.RED + "[ " + Fore.CYAN +\
         "%s" % str(seconds_until_next_period) +\
         Fore.RED + " ] " +\
