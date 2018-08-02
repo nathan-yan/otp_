@@ -1,0 +1,5 @@
+getch==1.0
+click==6.7
+pyotp==2.2.6
+keyring==13.2.1
+colorama==0.3.9
