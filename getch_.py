@@ -1,5 +1,6 @@
 import sys
 import os 
+import time
 
 USING_TERMIOS = True
 
@@ -32,3 +33,5 @@ def getch():
         keydown = msvcrt.kbhit()
         if keydown:
             return msvcrt.getch().decode()
+        
+        time.sleep(1)
