@@ -2,8 +2,13 @@ import click
 import pyotp
 import re
 import os
+import sys
 import json
 import shelve
+import signal
+
+import colorama
+from colorama import Fore, Back, Style
 
 import show as show_
 import delete as delete_
@@ -68,6 +73,20 @@ def getInformation():
         ret = {}
     
     return ret, s
+
+def handleSigint(sig, frame):
+    click.echo('\r' +\
+            Fore.RED + "[ " + Fore.CYAN +\
+            "-" +\
+            Fore.RED + " ] " +\
+            Style.RESET_ALL + Fore.GREEN + "--- ---" + "    " + Style.RESET_ALL, nl = False)      # Quit gracefully 
+
+    click.echo(Style.RESET_ALL)
+
+    sys.exit(0)
+
+# Set handler
+signal.signal(signal.SIGINT, handleSigint)
 
 @click.group()
 def cli():
