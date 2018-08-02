@@ -1,7 +1,11 @@
 from setuptools import setup
+import sys
 
 with open('requirements.txt') as f:
     requirements = f.read().splitlines()
+
+if sys.platform != 'win32':
+    requirements.append('getch==1.0')
 
 setup(
     name = "otp",
