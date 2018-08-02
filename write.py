@@ -1,21 +1,25 @@
 import click
 import os
 import json
+import keyring
+
 import otp
 
-def write(secrets, name, secret, email, issuer, description, force, hotp):
-    secrets[name] = {
+def write(name, secret, email, issuer, description, force, hotp):
+    information  = {
                         "secret" : secret,
                         "type" : "hotp" * hotp + "totp" * (1 - hotp),
                         "email" : email,
                         "issuer" : issuer,
-                        "description" : description
+                        "description" : description,
+                        "name" : name 
                     }
 
     if (hotp):
-        secrets[name]['counter'] = 0
+        information['counter'] = 0
     
-    return secrets
+    # set name to case agnostic name to prevent typos
+    keyring.set_password("otp-cli", name.lower(), json.dumps(information))
 
 @click.command()
 @click.option("--email", "-e", help = 'The email address this one-time password belongs to')
@@ -26,30 +30,21 @@ def write(secrets, name, secret, email, issuer, description, force, hotp):
 @click.argument("name", required = True)
 @click.argument("secret", required = True)
 def cli(name, secret, email, issuer, description, force, hotp):
-    credentials_path = os.path.expanduser("~\otp-cli\credentials.json")
+    information = keyring.get_password("otp-cli", name)    
 
-    with open(credentials_path, 'r') as credentials:
-        secrets = json.loads(credentials.read())
+    if information:
+        if force:
+            write(name, secret, email, issuer, description, force, hotp)
 
-        exists = secrets.get(name)
+        force = input("This name already exists. Overwrite anyway? [Y/n] ")
 
-        if exists:
-            if force:
-                secrets = write(secrets, name, secret, email, issuer, description, force, hotp)
+        if (force == 'Y'):
+            write(name, secret, email, issuer, description, force, hotp)
 
-            force = input("This name already exists. Overwrite anyway? [Y/n] ")
-
-            if (force == 'Y'):
-                secrets = write(secrets, name, secret, email, issuer, description, force, hotp)
-
-            else:
-                return 
         else:
-            secrets = write(secrets, name, secret, email, issuer, description, force, hotp)
-
-        newFile = open(credentials_path, 'w')
-        newFile.write(json.dumps(secrets))
-        newFile.close()
+            return 
+    else:
+        write(name, secret, email, issuer, description, force, hotp)
 
 if __name__ == "__main__":
     cli()
