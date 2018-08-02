@@ -22,16 +22,7 @@ def update_(information, name, secret, email, issuer, description, hotp):
     
     return information
 
-@click.command()
-@click.option("--email", "-e", help = 'The email address this one-time password belongs to')
-@click.option("--issuer", "-i", help = 'The issuer of this one-time password')
-@click.option("--description", "-d", help = 'The description of this one-time password')
-@click.option("--force/--no-force", default = False)
-@click.option("--hotp/--no-hotp", default = False)
-@click.option("--secret", "-s")
-@click.option("--name", "-n")
-@click.argument("name_", required = True)
-def update(name_, name, secret, email, issuer, force, description, hotp):
+def cli(name_, name, secret, email, issuer, force, description, hotp):
     if (secret):
         if(input("Are you sure you want to change your secret for %s? [Y/n] " % name) not in ['Y', 'y']):
             return 

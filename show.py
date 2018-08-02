@@ -36,11 +36,10 @@ def stream_otp(secret):
 
         sys.stdout.flush()
 
-@click.command()
-@click.option("--secret", "-s", help = 'The secret used to generate a one-time password')
-#@click.option("--")
-@click.argument("name", required = False)
-def cli(name, secret):
+def cli(name, secret, all):
+    #if all:
+        
+
     if secret:
         stream_otp(secret)
 

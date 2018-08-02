@@ -21,14 +21,6 @@ def write(name, secret, email, issuer, description, force, hotp):
     # set name to case agnostic name to prevent typos
     keyring.set_password("otp-cli", name.lower(), json.dumps(information))
 
-@click.command()
-@click.option("--email", "-e", help = 'The email address this one-time password belongs to')
-@click.option("--issuer", "-i", help = 'The issuer of this one-time password')
-@click.option("--description", "-d", help = 'The description of this one-time password')
-@click.option("--force/--no-force", default = False)
-@click.option("--hotp/--no-hotp", default = False)
-@click.argument("name", required = True)
-@click.argument("secret", required = True)
 def cli(name, secret, email, issuer, description, force, hotp):
     information = keyring.get_password("otp-cli", name)    
 
