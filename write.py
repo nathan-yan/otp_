@@ -29,6 +29,7 @@ def write(information, name, secret, email, issuer, description, force, hotp):
 
 def cli(name, secret, email, issuer, description, force, hotp):
     information, s = otp.getInformation() 
+    print(information)
     # keyring.get_password("otp-cli", name)    
 
     try:
@@ -46,6 +47,8 @@ def cli(name, secret, email, issuer, description, force, hotp):
         else:
             write(information, name, secret, email, issuer, description, force, hotp)
     finally:
+        print(information)
+        print("Cleaning up...")
         s.close()
 
 if __name__ == "__main__":
