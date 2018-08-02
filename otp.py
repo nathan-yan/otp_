@@ -62,7 +62,9 @@ def getInformation():
 
     try:
         ret = s['information']
+        
     except:
+        s['information'] = {}
         ret = {}
     
     return ret, s
