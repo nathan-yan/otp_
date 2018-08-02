@@ -37,7 +37,26 @@ def stream_otp(secret):
         sys.stdout.flush()
 
 def cli(name, secret, all):
-    #if all:
+    if all or not name:
+        information, s = otp.getInformation()
+        s.close()
+
+        for key in information:
+            info = information[key]
+
+            click.echo(Fore.YELLOW + info['name'] + Style.RESET_ALL)
+            if (info.get('issuer')):
+                click.echo("Issuer: %s" % info['issuer'])
+            if (info.get('email')):
+                click.echo("Email:  " + info['email'])
+            
+            if (info.get("description")):
+                click.echo("\n    %s" % info['description'])
+            
+            click.echo("")
+                
+        return
+
     if secret:
         stream_otp(secret)
 

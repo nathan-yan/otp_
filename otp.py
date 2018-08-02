@@ -13,8 +13,6 @@ import update as update_
 valid_secret_pattern = re.compile(b"^([A-Z][2-7]+)+$")
 information_path = os.path.expanduser(os.path.join("~", "otp-cli", "information.db"))
 
-print(information_path)
-
 def validateSecret(secret):
     return valid_secret_pattern.match(secret.encode())
 
