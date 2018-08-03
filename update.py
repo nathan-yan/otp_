@@ -24,6 +24,10 @@ def update_(information, name, secret, email, issuer, description, hotp):
 
 def cli(name_, name, secret, email, issuer, force, description, hotp):
     if (secret):
+        if otp.validateSecret(secret):
+            click.echo("Invalid secret! Valid secrets contain only the letters A-Z and digits 2-7")
+            return
+            
         if(input("Are you sure you want to change your secret for %s? [Y/n] " % name_) not in ['Y', 'y']):
             return 
     try:

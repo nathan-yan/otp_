@@ -35,7 +35,7 @@ def stream_otp(secret):
         sys.stdout.flush()
 
 def cli(name, secret, all):
-    if all or not name:
+    if all or (not name and not secret):
         information, s = otp.getInformation()
         s.close()
 
@@ -56,6 +56,10 @@ def cli(name, secret, all):
         return
 
     if secret:
+        if otp.validateSecret(secret):
+            click.echo("Invalid secret! Valid secrets contain only the letters A-Z and digits 2-7")
+            return
+
         stream_otp(secret)
 
     else:

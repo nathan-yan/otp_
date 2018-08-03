@@ -26,6 +26,10 @@ def write(information, name, secret, email, issuer, description, force, hotp):
     keyring.set_password("otp-cli", key, secret)
 
 def cli(name, secret, email, issuer, description, force, hotp):
+    if otp.validateSecret(secret):
+        click.echo("Invalid secret! Valid secrets contain only the letters A-Z and digits 2-7")
+        return
+        
     information, s = otp.getInformation() 
     # keyring.get_password("otp-cli", name)    
 
