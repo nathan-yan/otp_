@@ -29,7 +29,7 @@ def stream_otp(secret, copy = False):
         if (copy):
             try:
                 # Copy the code to clipboard
-                otp.copyCode(otp.showCode(secret))
+                otp.copyCode(otp.showCode(secret, split = False))
             except:
                 print("If you are currently on linux, you will need to install the xclip dependency. Run \"sudo apt-get install xclip\".")
                 break;
