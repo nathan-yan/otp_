@@ -14,11 +14,18 @@ import delete as delete_
 import write as write_
 import update as update_
 
-valid_secret_pattern = re.compile(b"^([A-Z]+[2-7]+)+$")
+valid_secret_pattern = re.compile(b"^([A-Z]|[2-7]+)+$")
 information_path = os.path.expanduser(os.path.join("~", "otp-cli", "information.db"))
 
 def validateSecret(secret):
-    return not valid_secret_pattern.match(secret.upper().encode())
+    notValid = not valid_secret_pattern.match(secret.upper().encode())
+
+    try:
+        pyotp.TOTP(secret).now()
+    except:
+        return True
+    
+    return notValid
 
 def showCode(secret, totp = True, counter = None, split = True):
     if validateSecret(secret):
