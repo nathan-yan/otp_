@@ -1,9 +1,12 @@
 from setuptools import setup
 import sys
 
+with open("README.md", 'r') as markdown:
+    long_description = markdown.read()
+
 # Check that python is greater than 3
 if sys.version_info[0] < 3:
-    print("To install this package you must have Python 3.0.0 or above")
+    raise Exception("To install this package you must have Python 3 or above")
 else:
     requirements = [
         "click>=6.7",
@@ -15,8 +18,10 @@ else:
 
     setup(
         name = "otp-cli",
-        version = "0.4.3",
-        description = "A CLI one-time password application that manages one-time passwords elegantly and with tons of customization.", 
+        version = "0.5.3",
+        description = "A CLI one-time password application that manages one-time passwords elegantly and with tons of customization.",
+        long_description_content_type = "text/markdown",
+        long_description = long_description,
         author = "Nathan Yan",
         author_email = "nathancyan2002@gmail.com",
         url = "https://github.com/nathan-yan/otp_",
