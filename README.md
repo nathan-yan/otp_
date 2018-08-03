@@ -6,7 +6,22 @@
 A command line based one-time password manager that allows you to easily retreive and store one-time passwords. Secrets are stored using the operating system's keyring, so sensitive information is encrypted.
 ![](https://gradebook-space-1.nyc3.digitaloceanspaces.com/Miscellaneous/demo.gif)
 
-## Commands
+# Contents
+* [Installing](#installing)
+* [Commands](#commands)
+  * [Show](###show)
+  * [Write](###show)
+  * [Update](###update)
+  * [Delete](###delete)
+* [Dependencies](#dependencies) 
+* [Future improvements](#future-improvements)
+
+# Installing
+Installation is really simple, just run `pip install otp-cli` and you're ready to go! Alternatively, you can install the application by cloning the repository and running `python setup.py install` in the `src` directory.
+
+If you're just testing locally, you can try it without installing by cloning the repository and running `python otp.py [OPTIONS]`.
+
+# Commands
 ### Show
 The show command shows a stored one-time password:
 <p align='center'>
@@ -35,3 +50,25 @@ The delete command deletes saved one-time passwords:
 <p align='center'>
   <img src = "https://gradebook-space-1.nyc3.digitaloceanspaces.com/Miscellaneous/otp_delete1.png">
 </p>
+
+# Dependencies
+OTP_ is made in Python, and requires the following dependencies: 
+
+1. click>=6.7
+2. pyotp>=2.2.6
+3. keyring>=13.2.1
+4. colorama>=0.3.9
+5. pyperclip>=1.6.4
+
+As of now, OTP_ works only on Python 3 and above, but I'm looking into getting it to work with older Python versions.
+
+Pyperclip allows one-time passwords to be copy pasted to the clipboard for easy access. According to its documentation (https://pypi.org/project/pyperclip/), `xclip` should be installed for anyone using a Linux based operating system, by running `sudo apt-get install xclip`
+
+# Future Improvements
+Here are a list of things I'd like to add in future versions of this package
+
+[] Support for Python 2.
+[] Support for counter based one-time passwords. 
+[] Support for different kinds of one-time passwords (different period, different number of digits, etc.)
+[] Refactoring code and establishing best-practices.
+[] Use a less fragile database for storing non-sensitive information like sqlite. 
