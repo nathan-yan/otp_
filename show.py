@@ -10,7 +10,7 @@ import keyring
 import colorama
 from colorama import Fore, Back, Style
 
-def stream_otp(secret):
+def stream_otp(secret, copy = False):
     while True:
         char = getch_.getch()
 
@@ -26,6 +26,14 @@ def stream_otp(secret):
 
         seconds_until_next_period = -int(time.time()) % 30
 
+        if (copy):
+            try:
+                # Copy the code to clipboard
+                otp.copyCode(otp.showCode(secret))
+            except:
+                print("If you are currently on linux, you will need to install the xclip dependency. Run \"sudo apt-get install xclip\".")
+                break;
+
         click.echo('\r' +\
         Fore.RED + "[ " + Fore.CYAN +\
         "%s" % str(seconds_until_next_period) +\
@@ -34,7 +42,7 @@ def stream_otp(secret):
 
         sys.stdout.flush()
 
-def cli(name, secret, all):
+def cli(name, secret, all, copy):
     if all or (not name and not secret):
         information, s = otp.getInformation()
         s.close()
@@ -60,7 +68,7 @@ def cli(name, secret, all):
             click.echo("Invalid secret! Valid secrets contain only the letters A-Z and digits 2-7")
             return
 
-        stream_otp(secret)
+        stream_otp(secret, copy = copy)
 
     else:
         try:
@@ -85,7 +93,7 @@ def cli(name, secret, all):
                 click.echo("")
 
             if name:
-                stream_otp(secret)
+                stream_otp(secret, copy = copy)
         finally:
             s.close()
 

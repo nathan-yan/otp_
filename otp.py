@@ -5,6 +5,7 @@ import os
 import sys
 import shelve
 import signal
+import pyperclip
 
 import colorama
 from colorama import Fore, Back, Style
@@ -26,6 +27,9 @@ def validateSecret(secret):
         return True
     
     return notValid
+
+def copyCode(code):
+    pyperclip.copy(code)
 
 def showCode(secret, totp = True, counter = None, split = True):
     if validateSecret(secret):
@@ -67,7 +71,8 @@ def removeInformation(key, value):
 def getInformation():
     try:
         s = shelve.open(information_path, writeback = True)
-    except:
+    except Exception as e:
+        print(e)
         os.makedirs(os.path.dirname(information_path), exist_ok = True)
         s = shelve.open(information_path, writeback = True)
 
@@ -101,10 +106,10 @@ def cli():
 @cli.command()
 @click.option("--secret", "-s", help = 'The secret used to generate a one-time password')
 @click.option("--all", "-a", is_flag = True, help = 'Show information of all stored one-time passwords')
-#@click.option("--")
+@click.option("--copy", "-c", is_flag = True, help = 'Copy one-time password to clipboard')
 @click.argument("name", required = False)
-def show(name, secret, all):
-    show_.cli(name, secret, all)
+def show(name, secret, all, copy):
+    show_.cli(name, secret, all, copy)
 
 @cli.command()
 @click.option("--email", "-e", help = 'The email address this one-time password belongs to')
