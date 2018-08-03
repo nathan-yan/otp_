@@ -12,7 +12,7 @@ The show command shows a stored one-time password:
 <p align='center'>
   <img src = "https://gradebook-space-1.nyc3.digitaloceanspaces.com/Miscellaneous/otp_show1.png">
 </p>
-Names are case-__insensitive__ to help prevent typos involving case.  If you want to quickly get a one-time password for a secret, for testing or development purposes, just run `opt show --secret [SECRET]` to see its corresponding TOTP code.
+Names are case-insensitive to help prevent typos involving case.  If you want to quickly get a one-time password for a secret, for testing or development purposes, just run ```opt show --secret [SECRET]``` to see its corresponding TOTP code.
 
 Codes are updated in real-time, and they are hidden upon exit (`CTRL-C` or `q`).
 
