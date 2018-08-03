@@ -9,10 +9,10 @@ A command line based one-time password manager that allows you to easily retreiv
 # Contents
 * [Installing](#installing)
 * [Commands](#commands)
-  * [Show](###show)
-  * [Write](###show)
-  * [Update](###update)
-  * [Delete](###delete)
+  * [Show](#show)
+  * [Write](#show)
+  * [Update](#update)
+  * [Delete](#delete)
 * [Dependencies](#dependencies) 
 * [Future improvements](#future-improvements)
 
@@ -65,10 +65,10 @@ As of now, OTP_ works only on Python 3 and above, but I'm looking into getting i
 Pyperclip allows one-time passwords to be copy pasted to the clipboard for easy access. According to its documentation (https://pypi.org/project/pyperclip/), `xclip` should be installed for anyone using a Linux based operating system, by running `sudo apt-get install xclip`
 
 # Future Improvements
-Here are a list of things I'd like to add in future versions of this package
+Here are a list of things I'd like to add in future versions of this package.
 
-[] Support for Python 2.
-[] Support for counter based one-time passwords. 
-[] Support for different kinds of one-time passwords (different period, different number of digits, etc.)
-[] Refactoring code and establishing best-practices.
-[] Use a less fragile database for storing non-sensitive information like sqlite. 
+- [ ] Support for Python 2.
+- [ ] Support for counter based one-time passwords. 
+- [ ] Support for different kinds of one-time passwords (different period, different number of digits, etc.)
+- [ ] Refactoring code and establishing best-practices.
+- [ ] Use a less fragile database for storing non-sensitive information like sqlite. 
